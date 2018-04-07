@@ -8,7 +8,8 @@ import LiuShiSiGua as LSSG
 ShiYing_Tuple = ("世","  ","  ","应","  ","  ")
 yao_pos = ("上", "五", "四", "三", "二", "初")
 
-
+#输出到Tab 1
+#获得之卦的结果，只选取动爻部分
 def biangua(waidongyao, neidongyao,waigua,neigua):
     waigua_bian = SJG.BaGuaUp(waigua.dongyao(waidongyao))
     neigua_bian = SJG.BaGuaDown(neigua.dongyao(neidongyao))
@@ -125,3 +126,18 @@ def output_3(frames,yongshen):
 #所求卦象的名称
 def output_5(frames,flagup,flagdown):
     tk.Label(frames, text=LSSG.liushisi_Gua.get((flagup,flagdown)), font=("Microsoft YaHei", 12), anchor="center",width=6).grid(column=1, row=6, sticky="WE")
+
+#输出到Tab 2
+def output_t2_1(scr,text):
+    scr.config(state='normal')
+    scr.delete('0.0', 'end')
+    scr.insert('end','所查询事物取象为：' + text)
+    scr.config(state='disabled')
+
+def output_t2_2(scr,text2):
+    scr.config(state='normal')
+    scr.delete('0.0', 'end')
+    for counters in range(len(text2)):
+        scr.insert('end',text2[counters] + '\n')
+
+    scr.config(state='disabled')

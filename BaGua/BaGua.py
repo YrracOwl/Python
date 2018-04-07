@@ -2,6 +2,7 @@
 #-*- coding: utf-8 -*-
 
 #系统及第三方包
+import os
 import tkinter as tk
 from tkinter import ttk
 from tkinter import scrolledtext
@@ -14,6 +15,7 @@ import SanJingGua as SJG
 import LiuShiSiGua as LSSG
 import YueRi as YR
 import  OutToLableFrame as OTLF
+import  SearchForAnswer as SFA
 
 class Win(object):
 
@@ -42,7 +44,7 @@ class Win(object):
     def m_radCall_yongshen(self):
         pass
 
-    #装卦按钮
+#装卦按钮
     def m_butCall_t1(self):
         data = self.detectData()
         if isinstance(data,str):
@@ -92,7 +94,7 @@ class Win(object):
 
             self.flag = 1
 
-    #取用神按钮
+#取用神按钮
     def m_butCall_t2(self):
         if self.flag == 0:
             self._errorBox_QYS()
@@ -100,7 +102,18 @@ class Win(object):
             YongShenPosition = LSSG.QuYongShen(self.activeGanZhi,self.radVar3.get())
             OTLF.output_3(self.labelframe_t1_1,YongShenPosition)
 
-    # message boxes
+#查询取象按钮
+    def m_butCall_t3(self):
+        temp = SFA.searchEverything(self.name_t2_1.get())
+        #输出到tab 2 中的文本框
+        OTLF.output_t2_1(self.scr_t2_1,temp)
+
+#卦象查询按钮
+    def m_butCall_t4(self):
+        temp = SFA.search64Gua(self.name_t2_2.get())
+        OTLF.output_t2_2(self.scr_t2_2, temp)
+
+# message boxes
     def _msgBox(self):
         mBox.showinfo('关于作者', "Author: 小萌新。\nTime::2018/04/05")
 
@@ -118,7 +131,7 @@ class Win(object):
     def _errorBox_QYS(self):
         mBox.showerror('输入参数错误', '请  先  装  卦！')
 
-    #监测输入数据是否正常
+#监测输入数据是否正常
     def detectData(self):
         if self.radVar1.get() == 0:
             return "  < 卦  象 >"
@@ -136,14 +149,15 @@ class Win(object):
 
     #创建整个框架
     def createWidgets(self):
-        #创建Tab页面
+
+#创建Tab页面
         tabControl = ttk.Notebook()
 
         self.tab1 = tk.Frame(tabControl)
         tabControl.add(self.tab1, text="六爻预测")
 
         self.tab2 = tk.Frame(tabControl)
-        tabControl.add(self.tab2, text="万物取象")
+        tabControl.add(self.tab2, text="寻    卦")
 
         self.tab3 = tk.Frame(tabControl)
         tabControl.add(self.tab3, text="待    定")
@@ -176,8 +190,19 @@ class Win(object):
         self.monty_t1_8.grid(column=9, row=6, padx=8, pady=4, sticky="WNE")
 
         # 创建Tab 2 页面中的下一层框架
+        self.monty_t2_1 = ttk.LabelFrame(self.tab2, text="万物取象查询：")
+        self.monty_t2_1.grid(column=0, row=0, padx=8, pady=4, sticky="WN")
 
-        #Tab 1 内容
+        self.monty_t2_2 = ttk.LabelFrame(self.tab2, text="六十四卦查询：")
+        self.monty_t2_2.grid(column=0, row=2, padx=8, pady=4, sticky="WN")
+
+        self.monty_t2_3 = ttk.LabelFrame(self.tab2, text="万 物 取 象 显 示：")
+        self.monty_t2_3.grid(column=1, row=0, padx=8, pady=4, sticky="WN")
+
+        self.monty_t2_4 = ttk.LabelFrame(self.tab2, text="卦 象 查 阅 结 果：")
+        self.monty_t2_4.grid(column=1, row=2, padx=8, pady=4, sticky="WN")
+
+#Tab 1 内容
         #创建RadioButtons
         self.radVar1 = tk.IntVar()
         for counters in range(8):
@@ -290,7 +315,46 @@ class Win(object):
         for child in self.labelframe_t1_2.winfo_children():
             child.grid_configure(padx=2,pady=2)
 
-        # 创建菜单---------------------------------------------------------
+#Tab 2 内容
+
+        #文本框的创建
+        tk.Label(self.monty_t2_1, text="输入想要查询的取象").grid(column=0, row=0, sticky="W")
+        self.name_t2_1 = tk.StringVar()
+        self.nameEnterd_t2_1 = tk.Entry(self.monty_t2_1, width=30, textvariable=self.name_t2_1, bd=3, justify="right")
+        self.nameEnterd_t2_1.insert(0, '< 例如： 圆物>')
+        self.nameEnterd_t2_1.grid(column=0, row=1, sticky="W")
+
+        tk.Label(self.monty_t2_2, text="输入想要查询的卦象").grid(column=0, row=0, sticky="W")
+        self.name_t2_2 = tk.StringVar()
+        self.nameEnterd_t2_2 = tk.Entry(self.monty_t2_2, width=30, textvariable=self.name_t2_2, bd=3, justify="right")
+        self.nameEnterd_t2_2.insert(0, '< 例如： 水火既济 >')
+        self.nameEnterd_t2_2.grid(column=0, row=1, sticky="W")
+
+        #按钮的创建
+        self.action_t2_1 = tk.Button(self.monty_t2_1,text="查询取象",command=self.m_butCall_t3, width=8,
+                                     bd=2, activeforeground="red",font=("Microsoft YaHei",12))
+        self.action_t2_1.grid(column=0,row=2,sticky="E")
+
+        self.action_t2_2 = tk.Button(self.monty_t2_2,text="卦象查阅",command=self.m_butCall_t4, width=8,
+                                     bd=2, activeforeground="red",font=("Microsoft YaHei",12))
+        self.action_t2_2.grid(column=0,row=2,sticky="E")
+
+        #创建ScrolledText
+        self.scrolW_t2_1 = 64
+        self.scrolH_t2_1 = 5
+        self.scr_t2_1 = scrolledtext.ScrolledText(self.monty_t2_3,width=self.scrolW_t2_1,height=self.scrolH_t2_1
+                        ,wrap=tk.WORD,font = ("Mircrosoft YaHei",12), fg='black')
+        self.scr_t2_1.config(state="disabled")
+        self.scr_t2_1.grid(column=0,columnspan=8)
+
+        self.scrolW_t2_2 = 64
+        self.scrolH_t2_2 = 28
+        self.scr_t2_2 = scrolledtext.ScrolledText(self.monty_t2_4,width=self.scrolW_t2_2,height=self.scrolH_t2_2
+                        ,wrap=tk.WORD,font = ("Mircrosoft YaHei",12), fg='black')
+        self.scr_t2_2.config(state="disabled")
+        self.scr_t2_2.grid(column=0,columnspan=8)
+
+# 创建菜单---------------------------------------------------------
         menuBar = Menu(self.top)
         self.top.config(menu=menuBar)
 
@@ -303,7 +367,7 @@ class Win(object):
         helpMenu = Menu(menuBar, tearoff=0)
         helpMenu.add_command(label="About", command=self._msgBox)
         menuBar.add_cascade(label="for Fun", menu=helpMenu)
-        # ~创建菜单---------------------------------------------------------
+# ~创建菜单---------------------------------------------------------
 
 
 
