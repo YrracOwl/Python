@@ -3,6 +3,7 @@
 
 #系统及第三方包
 import os
+import sys
 import tkinter as tk
 from tkinter import ttk
 from tkinter import scrolledtext
@@ -17,11 +18,21 @@ import YueRi as YR
 import  OutToLableFrame as OTLF
 import  SearchForAnswer as SFA
 
+
+
 class Win(object):
 
     def __init__(self):
         self.top = tk.Tk()
         self.top.title("八卦")
+        #tkinter在屏幕中间打开
+        width = 800
+        height = 650
+        screenWidth = self.top.winfo_screenwidth()
+        screenHeight = self.top.winfo_screenheight()
+        x = (screenWidth/2) - (width/2)
+        y = (screenHeight/2) - (height/2)
+        self.top.geometry('%dx%d+%d+%d' % (width,height,x,y))
 
         # 判断装卦与定用神的先后顺序
         self.flag = 0
@@ -33,6 +44,11 @@ class Win(object):
         self.temp_down_b = (0, 0, 0)
         self.flag_out = 0
         '''
+        #二维码属性
+        self.photo = tk.PhotoImage(file=SFA.resource_path('QRcode.gif'))
+        #用户定义字体
+        self.customFont =  ("Mircrosoft YaHei",11)
+
         self.createWidgets()
 
     def m_radCall_up(self):
@@ -113,9 +129,28 @@ class Win(object):
         temp = SFA.search64Gua(self.name_t2_2.get())
         OTLF.output_t2_2(self.scr_t2_2, temp)
 
+#用户定义弹出窗口
+    def _wechatID(self):
+        temp = tk.Toplevel()
+        temp.title('微信订阅号')
+        width = 277
+        height = 400
+        screenWidth = temp.winfo_screenwidth()
+        screenHeight = temp.winfo_screenheight()
+        x = (screenWidth / 2) - (width / 2)
+        y = (screenHeight / 2) - (height / 2)
+        temp.geometry('%dx%d+%d+%d' % (width, height, x, y))
+
+        tk.Label(temp, text='作者邮箱：',font=self.customFont, fg='black').grid(column=0, row=0, padx = 8,pady=8,sticky="W")
+        tk.Label(temp, text='whocarry@gmail.com', font=self.customFont, fg='blue', anchor='w').grid(column=0, row=1, padx = 8,sticky="W")
+        tk.Label(temp, text='微信公众号：',font=self.customFont, fg='black').grid(column=0, row=2, padx = 8,pady=8, sticky="W")
+        tk.Label(temp, text='YrracOwl', font=self.customFont, fg='blue', anchor='w').grid(column=0, row=3, padx = 8, sticky="W")
+        #tk.Label(temp, text='微信公众号：', font=self.customFont, fg='black').grid(column=0, row=2, padx=8, pady=8,sticky="W")
+        tk.Label(temp, image=self.photo).grid(column=0, row=4, padx=8, pady=8,sticky="W")
+
 # message boxes
     def _msgBox(self):
-        mBox.showinfo('关于作者', "Author: 小萌新。\nTime::2018/04/05")
+        mBox.showinfo('关于作者', "Waiting for memories")
 
     def _quitBox(self):
         answer = mBox.askyesno("退出窗口", "真的想要退出吗？")
@@ -159,8 +194,8 @@ class Win(object):
         self.tab2 = tk.Frame(tabControl)
         tabControl.add(self.tab2, text="寻    卦")
 
-        self.tab3 = tk.Frame(tabControl)
-        tabControl.add(self.tab3, text="待    定")
+        #self.tab3 = tk.Frame(tabControl)
+        #tabControl.add(self.tab3, text="待    定")
 
         tabControl.pack(expand=1, fill="both")
 
@@ -271,12 +306,12 @@ class Win(object):
 
         self.name_t1_1 = tk.StringVar()
         self.nameEnterd_t1_1 = tk.Entry(self.monty_t1_4, width=12, textvariable=self.name_t1_1, bd=3, justify="right")
-        self.nameEnterd_t1_1.insert(0,'<待输入>')
+        self.nameEnterd_t1_1.insert(0,'<例如：卯>')
         self.nameEnterd_t1_1.grid(column=1,row=0)
 
         self.name_t1_2 = tk.StringVar()
         self.nameEnterd_t1_2 = tk.Entry(self.monty_t1_4, width=12, textvariable=self.name_t1_2, bd=3, justify="right")
-        self.nameEnterd_t1_2.insert(0, '<待输入>')
+        self.nameEnterd_t1_2.insert(0, '<例如：甲子>')
         self.nameEnterd_t1_2.grid(column=5, row=0)
 
         '''
@@ -286,7 +321,7 @@ class Win(object):
         '''
 
         #创建scrolled text
-        self.scrolW_t1_1 = 50
+        self.scrolW_t1_1 = 45
         self.scrolH_t1_1 = 12
         self.scr_t1_1 = scrolledtext.ScrolledText(self.monty_t1_3,width=self.scrolW_t1_1,height=self.scrolH_t1_1
                         ,wrap=tk.WORD,font = ("Mircrosoft YaHei",11), fg='red')
@@ -359,18 +394,18 @@ class Win(object):
         self.top.config(menu=menuBar)
 
         fileMenu = Menu(menuBar, tearoff=0)
-        fileMenu.add_command(label="nothing")
+        fileMenu.add_command(label="Nothing")
         fileMenu.add_separator()
-        fileMenu.add_command(label="exit", command=self._quitBox)
-        menuBar.add_cascade(label="Just ", menu=fileMenu)
+        fileMenu.add_command(label="退出", command=self._quitBox)
+        menuBar.add_cascade(label="退  出", menu=fileMenu)
 
         helpMenu = Menu(menuBar, tearoff=0)
-        helpMenu.add_command(label="About", command=self._msgBox)
-        menuBar.add_cascade(label="for Fun", menu=helpMenu)
+        helpMenu.add_command(label="微信订阅号", command=self._wechatID)
+        menuBar.add_cascade(label="公众号", menu=helpMenu)
 # ~创建菜单---------------------------------------------------------
 
 
 
 win = Win()
-
+tt.creatToolTip(win.monty_t1_5,'动爻的选取，默认六爻安静')
 win.top.mainloop()

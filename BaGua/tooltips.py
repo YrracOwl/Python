@@ -15,13 +15,13 @@ class ToolTip(object):
         if self.tipwindow or not self.text:
             return
         x,y,_cx,cy = self.widget.bbox("insert")
-        x += self.widget.winfo_rootx() + 27
-        y += cy + self.widget.winfo_rooty() + 27
+        x += self.widget.winfo_rootx() + 8
+        y += cy + self.widget.winfo_rooty() + 2
         self.tipwindow = tw = tk.Toplevel(self.widget)
         tw.wm_overrideredirect(1)
         tw.wm_geometry("+%d+%d"%(x,y))
         
-        lab1 = tk.Label(tw,text=self.text,justify=tk.LEFT,background="#ffffe0",relief=tk.SOLID,borderwidth=1,font=("Microsoft YaHei","12","normal"))
+        lab1 = tk.Label(tw,text=self.text,justify=tk.LEFT,background="#ffffe0",relief=tk.SOLID,borderwidth=1,font=("Microsoft YaHei",10,"normal"))
         lab1.pack(ipadx=1)
         
     def hidetip(self):
