@@ -2,7 +2,8 @@
 #-*- coding: utf-8 -*-
 
 #系统及第三方包
-import os#不添加这个将无法正常打包
+import os
+#不添加 os 这个将无法正常打包
 import tkinter as tk
 from tkinter import ttk
 from tkinter import Menu
@@ -25,8 +26,10 @@ class OOP(object):
         self.createWidgets()
         
     #Modified Button Click Function
+    '''
     def clickMe(self):
         self.numberChosen2["values"] = ss.stage2nd(self.number1.get())
+    '''
 
     def _radCall(self):
         self.radtemp = ss.stage2ndint(self.radVar1.get())
@@ -41,38 +44,18 @@ class OOP(object):
         self.numberChosen2["values"] = self.montemp
 
     def checkMon(self):
-        self.num += 1
-        if self.num == 40:
-            self._finalcaidan()
-        if self.num == 9:
-            self._remindbox()
         ss.money3rd(self.labelsFrame3,self.monVar2.get())
 
     def checkThem(self):
-        self.num += 1
-        if self.num%2000 == 40:
-            self._finalcaidan()
-        if self.num == 9:
-            self._remindbox()            
         ss.stage3rd(self.labelsFrame2,self.radtemp[self.radVar2.get()])
         
-    def _msgBox(self):
-        mBox.showinfo('<翠玉钥匙>','这是第2个彩蛋：\n这个小程序是我做的第一个……做来练手的……\n泉眼无声惜细流，树阴照水    晴柔。\n小荷才露尖尖角，早有蜻蜓立上头。\n\n')
-        
+
     def _quitBox(self):
         answer = mBox.askyesno("退出窗口","真的想要退出吗？")
-        if answer == True:
+        if answer:
             self.win.quit()
     
-    def _caidanbox(self):
-        mBox.showinfo("<黄铜钥匙>","这是第1个彩蛋，你点了它什么也不会发生\n    见青山多妩媚\n\n")
 
-    def _finalcaidan(self):        
-        mBox.showinfo("<水晶钥匙>","这是第3个彩蛋                                                                \n\n何为孤寂？\n\n清风，艳日，无笑意。\n\n可否具体?\n\n左拥，右抱，无情欲。\n\n可否再具体？\n\n不得    。\n\n")
-    
-    def _remindbox(self):
-        mBox.showinfo("彩蛋","这个软件有三个彩蛋，找到了记得给作者发个消息~")
-    
     #创建框架--------------------------------------------------------------
     def createWidgets(self):
     
@@ -217,13 +200,13 @@ class OOP(object):
         self.win.config(menu=menuBar)
         
         fileMenu = Menu(menuBar,tearoff=0)
-        fileMenu.add_command(label="新建一个...什么呢？",command=self._caidanbox)
+        fileMenu.add_command(label="新建一个...什么呢？")
         fileMenu.add_separator()
         fileMenu.add_command(label="我要退出",command=self._quitBox)
         menuBar.add_cascade(label="【都给我坐下】",menu=fileMenu)
 
         helpMenu = Menu(menuBar,tearoff=0)
-        helpMenu.add_command(label="关于这个软件",command=self._msgBox)
+        helpMenu.add_command(label="关于这个软件")
         menuBar.add_cascade(label="【这是基本操作】",menu=helpMenu)
         #~创建菜单---------------------------------------------------------
     #~创建框架-------------------------------------------------------------
