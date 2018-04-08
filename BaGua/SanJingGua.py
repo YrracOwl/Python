@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 
+
 #乾1
 class Qian(object):
     def __init__(self,flagup=0,flagdown=0):

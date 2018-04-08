@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 
+
 import SanJingGua as SJG
 
 #字典：六亲定义

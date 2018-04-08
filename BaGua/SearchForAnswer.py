@@ -3,6 +3,7 @@
 import os
 import sys
 
+
 #test pyinstaller
 def resource_path(relative_path):
     try:
