@@ -97,7 +97,7 @@ def output_2(frames, yuexiang, rixiang, kongwang, wuxing64, BenGuaGong, yueming,
 
     #本卦宫干支五行
     dizhiup = SJG.BaGuaUp(BenGuaGong.number)
-    dizhidown = SJG.BaGuaUp(BenGuaGong.number)
+    dizhidown = SJG.BaGuaDown(BenGuaGong.number)
     for counters in range(3):
         tk.Label(frames, text=dizhiup[counters], font=("Microsoft YaHei", 12), anchor="w", width=6).grid(column=2, row=counters, sticky="W")
     for counters in range(3):
