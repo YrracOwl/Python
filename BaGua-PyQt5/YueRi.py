@@ -25,8 +25,6 @@ Dizhi_He = {"子": "丑", "丑": "子", "寅": "亥", "卯": "戌", "辰": "酉"
 
 #长生十二掌诀
 
-
-
 #六神定位
 def ZhuRiLiuShen(richen):
     changeYao = liushenBiao.get(richen[:1])
@@ -38,19 +36,22 @@ def ZhuRiLiuShen(richen):
 
 #月建月破与日建空亡
 def YueRiWuXing(yuefen,richen):
+    month = yuefen
+    day = richen
     #月建日建
-    yuejian = DiZhi_Wuxing.get(yuefen[0:1])
-    yuepo = Dizhi_Chong.get(yuefen[0:1])
+    yuejian = DiZhi_Wuxing.get(yuefen[1:])
+    yuepo = Dizhi_Chong.get(yuefen[1:])
     rijian = DiZhi_Wuxing.get(richen[1:])
     ripo = Dizhi_Chong.get(richen[1:])
     if (yuejian is None)or(rijian is None):
-        print("输入有误", "输入有误", "输入有误", "输入有误", "输入有误", ["输入有误", "输入有误", "输入有误", "输入有误", "输入有误", "输入有误"])
-    #空亡日
-    kw_dizhi = DiZhi_Number.get(richen[1:])
-    kw_tiangan = TianGan_Number.get(richen[0:1])
-    kongwangri = [DiZhi_Tuple[(10 - kw_tiangan + kw_dizhi) % 12],
-                  DiZhi_Tuple[(11 - kw_tiangan + kw_dizhi) % 12]]
+        return "输入有误", "输入有误", "输入有误", "输入有误", ["输入有误", "输入有误"], ["输入有误", "输入有误", "输入有误", "输入有误", "输入有误", "输入有误"],"输入有误","输入有误"
+    else:
+        #空亡日
+        kw_dizhi = DiZhi_Number.get(richen[1:])
+        kw_tiangan = TianGan_Number.get(richen[0:1])
+        kongwangri = [DiZhi_Tuple[(10 - kw_tiangan + kw_dizhi) % 12],
+                      DiZhi_Tuple[(11 - kw_tiangan + kw_dizhi) % 12]]
 
-    liushenPosition = ZhuRiLiuShen(richen)
+        liushenPosition = ZhuRiLiuShen(richen)
 
-    return (yuejian, yuepo), (rijian, ripo), kongwangri, liushenPosition
+        return yuejian, yuepo, rijian, ripo, kongwangri, liushenPosition, month,day

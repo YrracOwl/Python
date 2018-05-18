@@ -1,0 +1,40 @@
+html,
+body {
+  height: 100%;
+  background-color: #1C1C1C;
+  color: #8A7B66;
+}
+
+body {
+  padding-bottom: 20px;
+  height: 100%;
+  color: #8A7B66;
+}
+
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+.container {
+  max-width: 960px;
+}
+
+/* Custom default button */
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus {
+  color: #333;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  background-color: #8A7B66;
+  border: .05rem solid #8A7B66;
+}
+
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+.border-top-gray { border-top-color: #adb5bd; }
+
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+.lh-condensed { line-height: 1.25; }
